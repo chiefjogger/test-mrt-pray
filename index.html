@@ -10,7 +10,8 @@
     body {
       margin: 0;
       padding: 0;
-      font-family: Arial, sans-serif
+      font-family: Arial, sans-serif;
+      position: relative;
     }
 
     .altar {
@@ -71,15 +72,21 @@
     }
 
     .result-container {
-      text-align: center;
-      margin-top: 50px
-    }
+  position: fixed;
+  top: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 999999;
+}
 
-    #result {
-      font-size: 24px;
-      font-weight: bold;
-      color: #f00
-    }
+#result {
+  font-size: 164px;
+  font-weight: bold;
+  color: #f00;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+}
+
+
   </style>
 </head>
 
@@ -106,11 +113,14 @@
       <button class="option">Cầu gọi vốn</button>
     </div>
   </div>
+
   <button id="submit-button">Thắp hương</button>
+  <div id="counter-okr"></div>
   <div class="result-container">
     <canvas id="confetti-canvas"></canvas>
     <p id="result"></p>
   </div>
+
 
   <script>
     const prayerInput = document.getElementById('prayer');
@@ -131,31 +141,35 @@
     });
 
     submitButton.addEventListener('click', () => {
-      if (selectedOption || prayerInput.value) {
-        result.textContent = 'Cầu Được Ước Thấy OKR OKR OKR';
+  if (selectedOption || prayerInput.value) {
+    const resultText = document.createElement('p');
+    resultText.textContent = 'Cầu Được Ước Thấy OKR OKR OKR';
+    resultText.style.position = 'absolute';
+    resultText.style.top = '50%';
+    resultText.style.left = '50%';
+    resultText.style.fontSize = '4rem';
+    resultText.style.fontWeight = 'bold';
+    resultText.style.transform = 'translate(-50%, -50%)';
+    resultText.style.color = '#f00';
+    document.body.appendChild(resultText);
+    const confettiSettings = {
+      angle: 90,
+      spread: 45,
+      startVelocity: 45,
+      elementCount: 50,
+      dragFriction: 0.1,
+      duration: 3000,
+      stagger: 0,
+      width: "10px",
+      height: "10px",
+      perspective: "500px",
+      colors: ["#f00", "#0f0", "#00f"]
+    };
+    const confetti = new ConfettiGenerator(confettiSettings);
+    confetti.render();
+  }
+});
 
-        const confettiSettings = {
-          angle: 90,
-          spread: 45,
-          startVelocity: 45,
-          elementCount: 50,
-          dragFriction: 0.1,
-          duration: 3000,
-          stagger: 0,
-          width: "10px",
-          height: "10px",
-          perspective: "500px",
-          colors: ["#f00", "#0f0", "#00f"]
-        };
-
-        if (confettiCanvas && confettiCanvas.tagName === "CANVAS") {
-      const confetti = new ConfettiGenerator(confettiSettings);
-      confetti.render();
-    } else {
-      console.error("The confetti-canvas element is not a canvas element or does not exist.");
-    }
-      }
-    });
   </script>
 </body>
 
