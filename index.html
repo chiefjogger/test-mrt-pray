@@ -151,6 +151,9 @@
     resultText.style.fontWeight = 'bold';
     resultText.style.transform = 'translate(-50%, -50%)';
     resultText.style.color = '#f00';
+    const gongSound = new Audio('https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3');
+      gongSound.play();
+
     document.body.appendChild(resultText);
     const confettiSettings = {
       angle: 90,
