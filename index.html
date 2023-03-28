@@ -172,6 +172,15 @@
     };
     const confetti = new ConfettiGenerator(confettiSettings);
     confetti.render();
+    
+    // Add CountAPI code here
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "https://api.countapi.xyz/hit/marathon.pizza/awesomeclick");
+      xhr.responseType = "json";
+      xhr.onload = function() {
+        document.getElementById('counter-okr').innerHTML = `Cầu Được Ước Thấy OKR OKR OKR - Đã click ${this.response.value} lần!`;
+      }
+      xhr.send();
   }
 });
 
