@@ -148,8 +148,12 @@
           colors: ["#f00", "#0f0", "#00f"]
         };
 
-        const confetti = new ConfettiGenerator(confettiSettings);
-        confetti.render();
+        if (confettiCanvas && confettiCanvas.tagName === "CANVAS") {
+      const confetti = new ConfettiGenerator(confettiSettings);
+      confetti.render();
+    } else {
+      console.error("The confetti-canvas element is not a canvas element or does not exist.");
+    }
       }
     });
   </script>
