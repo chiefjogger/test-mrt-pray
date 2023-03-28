@@ -3,8 +3,6 @@
 
 <head>
   <meta charset="UTF-8">
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/confetti-js@0.0.18/dist/index.min.js"></script>
   <title>Altar Website</title>
   <style>
     body {
@@ -126,7 +124,6 @@
   <button id="submit-button">Thắp hương</button>
   <div id="counter-okr"></div>
   <div class="result-container">
-    <canvas id="confetti-canvas"></canvas>
     <p id="result"></p>
   </div>
 
@@ -151,16 +148,15 @@
 
     // Add CountAPI code here
     function updateCounter() {
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", "https://api.countapi.xyz/get/marathon.pizza/thaphuong");
-      xhr.responseType = "json";
-      xhr.onload = function() {
-        const clickValue = this.response.value * 1000;
-        document.getElementById('counter-okr').innerHTML = `OKR năm 2024 rev (mỗi lần thắp hương tăng $1,000): ${clickValue.toLocaleString()}`;
+        fetch("https://api.countapi.xyz/get/marathon.pizza/thaphuong")
+          .then(response => response.json())
+          .then(data => {
+            const clickValue = data.value * 1000;
+            document.getElementById('counter-okr').innerHTML = `OKR năm 2024 rev (mỗi lần thắp hương                 tăng $1,000): ${clickValue.toLocaleString()}`;
+          });
       }
-      xhr.send();
-    }
-    updateCounter();
+      updateCounter();
+
     
     submitButton.addEventListener('click', () => {
       if (selectedOption || prayerInput.value) {
@@ -177,32 +173,14 @@
           gongSound.play();
 
         document.body.appendChild(resultText);
-        const confettiSettings = {
-          angle: 90,
-          spread: 45,
-          startVelocity: 45,
-          elementCount: 50,
-          dragFriction: 0.1,
-          duration: 3000,
-          stagger: 0,
-          width: "10px",
-          height: "10px",
-          perspective: "500px",
-          colors: ["#f00", "#0f0", "#00f"],
-          zIndex: -1
-        };
-        const confetti = new ConfettiGenerator(confettiSettings);
-        confetti.render();
-
+        
         // Add CountAPI code here
-          var xhr = new XMLHttpRequest();
-          xhr.open("GET", "https://api.countapi.xyz/hit/marathon.pizza/thaphuong");
-          xhr.responseType = "json";
-          xhr.onloadend = function() {
-            updateCounter();
-          }
-          xhr.send();
-
+            fetch("https://api.countapi.xyz/hit/marathon.pizza/thaphuong")
+              .then(response => response.json())
+              .then(data => {
+                updateCounter();
+              });
+        
       }
 });
 
