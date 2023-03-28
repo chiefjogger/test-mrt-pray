@@ -178,7 +178,8 @@
       xhr.open("GET", "https://api.countapi.xyz/hit/marathon.pizza/awesomeclick");
       xhr.responseType = "json";
       xhr.onload = function() {
-        document.getElementById('counter-okr').innerHTML = `Cầu Được Ước Thấy OKR OKR OKR - Đã click ${this.response.value} lần!`;
+        const clickValue = this.response.value * 1000;
+        document.getElementById('counter-okr').innerHTML = `OKR năm 2024 rev (mỗi lần thắp hương tăng $1,000): ${clickValue.toLocaleString()}`;
       }
       xhr.send();
   }
