@@ -197,7 +197,7 @@
           var xhr = new XMLHttpRequest();
           xhr.open("GET", "https://api.countapi.xyz/hit/marathon.pizza/thaphuong");
           xhr.responseType = "json";
-          xhr.onload = function() {
+          xhr.onloadend = function() {
             updateCounter();
           }
           xhr.send();
