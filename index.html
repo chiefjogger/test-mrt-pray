@@ -149,47 +149,60 @@
       });
     });
 
-    submitButton.addEventListener('click', () => {
-  if (selectedOption || prayerInput.value) {
-    const resultText = document.createElement('p');
-    resultText.textContent = 'Cầu Được Ước Thấy OKR OKR OKR';
-    resultText.style.position = 'absolute';
-    resultText.style.top = '50%';
-    resultText.style.left = '50%';
-    resultText.style.fontSize = '4rem';
-    resultText.style.fontWeight = 'bold';
-    resultText.style.transform = 'translate(-50%, -50%)';
-    resultText.style.color = '#f00';
-    const gongSound = new Audio('https://www.soundjay.com/free-music/jungle-run-01.mp3');
-      gongSound.play();
-
-    document.body.appendChild(resultText);
-    const confettiSettings = {
-      angle: 90,
-      spread: 45,
-      startVelocity: 45,
-      elementCount: 50,
-      dragFriction: 0.1,
-      duration: 3000,
-      stagger: 0,
-      width: "10px",
-      height: "10px",
-      perspective: "500px",
-      colors: ["#f00", "#0f0", "#00f"]
-    };
-    const confetti = new ConfettiGenerator(confettiSettings);
-    confetti.render();
-    
     // Add CountAPI code here
+    function updateCounter() {
       var xhr = new XMLHttpRequest();
-      xhr.open("GET", "https://api.countapi.xyz/hit/marathon.pizza/awesomeclick");
+      xhr.open("GET", "https://api.countapi.xyz/get/marathon.pizza/awesomeclick");
       xhr.responseType = "json";
       xhr.onload = function() {
         const clickValue = this.response.value * 1000;
         document.getElementById('counter-okr').innerHTML = `OKR năm 2024 rev (mỗi lần thắp hương tăng $1,000): ${clickValue.toLocaleString()}`;
       }
       xhr.send();
-  }
+    }
+    updateCounter();
+    
+    submitButton.addEventListener('click', () => {
+      if (selectedOption || prayerInput.value) {
+        const resultText = document.createElement('p');
+        resultText.textContent = 'Cầu Được Ước Thấy OKR OKR OKR';
+        resultText.style.position = 'absolute';
+        resultText.style.top = '50%';
+        resultText.style.left = '50%';
+        resultText.style.fontSize = '4rem';
+        resultText.style.fontWeight = 'bold';
+        resultText.style.transform = 'translate(-50%, -50%)';
+        resultText.style.color = '#f00';
+        const gongSound = new Audio('https://www.soundjay.com/free-music/jungle-run-01.mp3');
+          gongSound.play();
+
+        document.body.appendChild(resultText);
+        const confettiSettings = {
+          angle: 90,
+          spread: 45,
+          startVelocity: 45,
+          elementCount: 50,
+          dragFriction: 0.1,
+          duration: 3000,
+          stagger: 0,
+          width: "10px",
+          height: "10px",
+          perspective: "500px",
+          colors: ["#f00", "#0f0", "#00f"]
+        };
+        const confetti = new ConfettiGenerator(confettiSettings);
+        confetti.render();
+
+        // Add CountAPI code here
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", "https://api.countapi.xyz/hit/marathon.pizza/awesomeclick");
+          xhr.responseType = "json";
+          xhr.onload = function() {
+            updateCounter();
+          }
+          xhr.send();
+
+      }
 });
 
   </script>
