@@ -151,8 +151,8 @@
         fetch("https://api.countapi.xyz/get/marathon.pizza/thaphuong")
           .then(response => response.json())
           .then(data => {
-            const clickValue = data.value * 1000;
-            document.getElementById('counter-okr').innerHTML = `OKR năm 2024 rev (mỗi lần thắp hương                 tăng $1,000): ${clickValue.toLocaleString()}`;
+            const clickValue = data.value * 100000;
+            document.getElementById('counter-okr').innerHTML = `OKR năm 2024 rev (mỗi lần thắp hương                 tăng $100,000): ${clickValue.toLocaleString()}`;
           });
       }
       updateCounter();
