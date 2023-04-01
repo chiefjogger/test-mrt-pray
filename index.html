@@ -157,19 +157,18 @@
   </div>
 
   <button id="submit-button">Thắp hương</button>
-  
-  <div id="leaderboard">
-  <h2>Leaderboard</h2>
-  <input type="text" id="nameInput" placeholder="Con tên là gì?.." />
-  <button id="submitName">Thắp hương</button>
-  <div id="leaderboardList">
-    <ol id="ranking"></ol>
-  </div>
-</div>
 
   <div id="counter-okr"></div>
   <div class="result-container">
     <p id="result"></p>
+    
+  <div id="leaderboard">
+  <h2>Leaderboard</h2>
+  <input type="text" id="nameInput" placeholder="Con tên là gì?.." />
+  <div id="leaderboardList">
+    <ol id="ranking"></ol>
+  </div>
+    
   </div>
 
 
@@ -218,6 +217,15 @@
           gongSound.play();
 
         document.body.appendChild(resultText);
+        
+        const name = nameInput.value.trim();
+          if (name.length > 0) {
+          const namespace = "marathon.pizza";
+          const key = encodeURIComponent(name);
+          await fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`);
+          nameInput.value = "";
+          updateLeaderboard();
+        }
         
         // Add CountAPI code here
             fetch("https://api.countapi.xyz/hit/marathon.pizza/thaphuong")
