@@ -89,7 +89,7 @@
       text-align: center;
       margin-top: 20px;
     }
-
+  </style>
 
     <style>
   #leaderboard {
@@ -223,13 +223,15 @@
         document.body.appendChild(resultText);
         
         const name = nameInput.value.trim();
-          if (name.length > 0) {
-          const namespace = "marathon.pizza";
-          const key = encodeURIComponent(name);
-          await fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`);
-          nameInput.value = "";
-          updateLeaderboard();
-        }
+        if (name.length > 0) {
+        const namespace = "marathon.pizza";
+        const key = encodeURIComponent(name);
+        fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`) // Remove 'await' here
+          .then(() => {
+            nameInput.value = "";
+            updateLeaderboard();
+          });
+      }
         
         // Add CountAPI code here
             fetch("https://api.countapi.xyz/hit/marathon.pizza/thaphuong")
