@@ -169,6 +169,7 @@
   <div id="leaderboard">
   <h2>Leaderboard</h2>
   <input type="text" id="nameInput" placeholder="Con tên là gì?.." />
+  
   <div id="leaderboardList">
     <ol id="ranking"></ol>
   </div>
@@ -226,7 +227,7 @@
         if (name.length > 0) {
         const namespace = "marathon.pizza";
         const key = encodeURIComponent(name);
-        fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`) // Remove 'await' here
+        fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
           .then(() => {
             nameInput.value = "";
             updateLeaderboard();
@@ -246,18 +247,6 @@
   const nameInput = document.getElementById("nameInput");
   const submitName = document.getElementById("submitName");
   const ranking = document.getElementById("ranking");
-
-submitName.addEventListener("click", async () => {
-  const name = nameInput.value.trim();
-  if (name.length === 0) return;
-
-  const namespace = "marathon.pizza";
-  const key = encodeURIComponent(name);
-
-  await fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`);
-  nameInput.value = "";
-  updateLeaderboard();
-});
 
 async function updateLeaderboard() {
   const namespace = "marathon.pizza";
