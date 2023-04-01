@@ -91,7 +91,42 @@
     }
 
 
+    <style>
+  #leaderboard {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+  }
 
+  #nameInput {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    box-sizing: border-box;
+  }
+
+  #submitName {
+    background-color: #f1c40f;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+
+  #leaderboardList {
+    padding: 0;
+    margin: 16px 0;
+  }
+
+  #ranking {
+    padding-left: 20px;
+  }
+    
   </style>
 </head>
 
@@ -122,6 +157,16 @@
   </div>
 
   <button id="submit-button">Thắp hương</button>
+  
+  <div id="leaderboard">
+  <h2>Leaderboard</h2>
+  <input type="text" id="nameInput" placeholder="Con tên là gì?.." />
+  <button id="submitName">Thắp hương</button>
+  <div id="leaderboardList">
+    <ol id="ranking"></ol>
+  </div>
+</div>
+
   <div id="counter-okr"></div>
   <div class="result-container">
     <p id="result"></p>
@@ -184,6 +229,44 @@
       }
 });
 
+  const nameInput = document.getElementById("nameInput");
+  const submitName = document.getElementById("submitName");
+  const ranking = document.getElementById("ranking");
+
+submitName.addEventListener("click", async () => {
+  const name = nameInput.value.trim();
+  if (name.length === 0) return;
+
+  const namespace = "marathon.pizza";
+  const key = encodeURIComponent(name);
+
+  await fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`);
+  nameInput.value = "";
+  updateLeaderboard();
+});
+
+async function updateLeaderboard() {
+  const namespace = "marathon.pizza";
+  const response = await fetch(`https://api.countapi.xyz/list/${namespace}?size=7`);
+  const data = await response.json();
+
+  ranking.innerHTML = "";
+
+  data.forEach((user, index) => {
+    const listItem = document.createElement("li");
+
+    if (index < 3) {
+      listItem.style.fontWeight = "bold";
+    }
+
+    listItem.textContent = `${index + 1}. ${user.key}: ${user.value}`;
+    ranking.appendChild(listItem);
+  });
+}
+
+updateLeaderboard();
+
+    
   </script>
 </body>
 
